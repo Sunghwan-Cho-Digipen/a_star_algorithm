@@ -21,7 +21,8 @@ public:
 
 	Cell(Vector2DInt xyIndex, char type, Vector2DInt screenPosition);
 	virtual ~Cell();
-	Vector2DInt GetPosition();
+	[[nodiscard]] Vector2DInt GetPosition() const noexcept;
+	[[nodiscard]] Vector2DInt GetXYIndex() const noexcept;
 	void Draw();
 	void SetToImage(Images image);
 	Images GetImage();
@@ -35,5 +36,8 @@ private:
 	Vector2DInt xyIndex;
 	Vector2DInt screenPosition;
 	Sprite* sprite;
+	unsigned gCost;
+	unsigned hCost;
+	
 	// You may add member variables
 };

@@ -18,9 +18,11 @@ Creation date:
 
 
 Cell::Cell(Vector2DInt xyIndex, char type, Vector2DInt screenPosition) : xyIndex(xyIndex), screenPosition(screenPosition),
-																	gCost(static_cast<unsigned int>(-1)), hCost(static_cast<unsigned int>(-1)), pNext(nullptr) {
+																	gCost(static_cast<unsigned int>(-1)), hCost(static_cast<unsigned int>(-1)), pNext(nullptr) //todo
+{
 	sprite = new Sprite("assets/Images.spt");
-	switch (type) {
+	switch (type)
+	{
 	case '0':
 		sprite->PlayAnimation(static_cast<int>(Images::None));
 		break;
@@ -33,22 +35,28 @@ Cell::Cell(Vector2DInt xyIndex, char type, Vector2DInt screenPosition) : xyIndex
 	}
 }
 
-Cell::~Cell() {
+Cell::~Cell()
+{
 	delete sprite;
 }
 
-Vector2DInt Cell::GetPosition() {
+Vector2DInt Cell::GetPosition() const noexcept
+{
 	return screenPosition;
+	
 }
 
-Vector2DInt Cell::GetXYIndex() {
+Vector2DInt Cell::GetXYIndex() const noexcept
+{
 	return xyIndex;
 }
 
-void Cell::Draw() {
+void Cell::Draw()
+{
 	sprite->Draw(TranslateMatrix(screenPosition));
 
-	if (gCost != static_cast<unsigned int>(-1)) {
+	if (gCost != static_cast<unsigned int>(-1)) 
+	{
 		// draw G cost replace the "" with a std::to_string( whatever your g cost is)
 		Engine::Instance().DrawText(1, screenPosition + Vector2DInt{ -sprite->GetFrameSize().x / 2 + 5, 10 }, std::to_string(GetGCost()), SpriteFont::Justified::Left, 0x0000FFFF);
 		// draw H cost replace the "" with a std::to_string( whatever your h cost is)
@@ -58,15 +66,33 @@ void Cell::Draw() {
 	}
 }
 
-void Cell::SetToImage(Images image) {
+void Cell::SetToImage(Images image)
+{
 	sprite->PlayAnimation(static_cast<int>(image));
 }
 
-Images Cell::GetImage() {
+Images Cell::GetImage()
+{
 	return static_cast<Images>(sprite->GetAnimation());
 }
 
-std::ostream& operator<<(std::ostream& out, Cell*& cell) {
+unsigned Cell::GetGCost()
+{
+	return gCost;
+}
+
+unsigned Cell::GetFCost()
+{
+	return  gCost + hCost;
+}
+
+unsigned Cell::GetHCost()
+{
+	return hCost;
+}
+
+std::ostream& operator<<(std::ostream& out, Cell*& cell)
+{
 	out << std::endl << "{" << cell->xyIndex.x << ", " << cell->xyIndex.y << '}' << " = " << cell->GetFCost();
 	return out;
 }

@@ -31,6 +31,7 @@ void Board::Load(std::string fileName) {
 	inFile >> boardWidth;
 	inFile >> boardHeight;
 
+	//todo
 	/* screenPosition is the xy position for where the cell is located on the screen.  
 	This is the bottom left cell. position.  Use cellSize to find the other cell screen positions*/
 
@@ -42,6 +43,7 @@ void Board::Load(std::string fileName) {
 
 Board::~Board() {
 	// delete the board
+	// todo
 }
 
 void Board::Draw() {

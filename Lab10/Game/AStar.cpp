@@ -19,9 +19,12 @@ void AStar::MakeBoard(std::string levelData) {
 	board->Load(levelData);	// load the data file and initialize the 2D array
 
 	// Find the target cell (the other end of our search path)
-	for (int x = 0; x < board->GetSize().x; x++) {
-		for (int y = 0; y < board->GetSize().y; y++) {
-			if (board->GetCell({ x,y })->GetImage() == Images::RedX) {
+	for (int x = 0; x < board->GetSize().x; x++) 
+	{
+		for (int y = 0; y < board->GetSize().y; y++) 
+		{
+			if (board->GetCell({ x,y })->GetImage() == Images::RedX) 
+			{
 				beginSearch = board->GetCell({ x,y });
 			}
 		}
@@ -31,17 +34,21 @@ void AStar::MakeBoard(std::string levelData) {
 void AStar::PlayerSelected(Vector2DInt cellLocation) {
 	selected = board->GetCell(cellLocation);
 	selected->SetToImage(Images::BlueX);
-
+	//todo
 	// Do stuff here for the selected locations
 }
 
 bool AStar::Visit() {
 	// Do stuff here for each step of our AStar algorithm
+	//todo
 }
 
 bool AStar::Compare(Cell* const& cellA, Cell* const& cellB) {
+	//todo
 	// compare 2 cells (return the less than value)
 	// The heap is already set up to use this function for our heap compare
+	//return cellA->GetFCost() < cellB->GetFCost() ? true : cellA->GetHCost() < cellB->GetHCost() ? true : false ;
+	
 }
 
 void AStar::Unload() {
