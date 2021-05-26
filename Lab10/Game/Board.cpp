@@ -38,12 +38,37 @@ void Board::Load(std::string fileName) {
 	Vector2DInt screenPosition = { center.x - cellSize.x * (boardWidth - 1) / 2,
 									center.y - cellSize.y * (boardHeight - 1) / 2 };
 	// Dynamically create a 2D contiguous array (lab 3) of size boardWidth & boardHeight
+	board = reinterpret_cast<Cell**>(malloc(boardHeight * sizeof(Cell*) + boardWidth * boardHeight));
+	for (int i = 0; i < boardHeight; ++i)
+	{
+		char* memoryLocation = reinterpret_cast<char*>(board + boardHeight);
+		memoryLocation = memoryLocation + i * boardWidth;
+		board[i] = reinterpret_cast<Cell*>(memoryLocation);
+	}
+	
 	// Initialize each cell of the board using the xyIndex, cell type (read from the file), and screenPosition
+	for (int j = 0; j < boardHeight; ++j)
+	{
+		for (int i = 0; i < boardHeight; ++i)
+		{
+			char value;
+			inFile >> value;
+			if(value == 'F')
+			{
+				aiStartCells.push_back({ i,j });
+			}
+			new(&board[j][i]) Cell(Vector2DInt{ i,j }, value, screenPosition);
+			screenPosition.x += cellSize.x;
+		}
+		screenPosition.x = center.x - cellSize.x * (boardWidth - 1) / 2;
+		screenPosition.y += cellSize.y;
+	}
 }
 
 Board::~Board() {
 	// delete the board
 	// todo
+	free(board);
 }
 
 void Board::Draw() {

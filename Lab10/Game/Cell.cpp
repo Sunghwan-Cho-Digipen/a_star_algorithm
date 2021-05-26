@@ -76,6 +76,16 @@ Images Cell::GetImage()
 	return static_cast<Images>(sprite->GetAnimation());
 }
 
+void Cell::SetpNext(Cell* nextPointer)
+{
+	pNext = nextPointer;
+}
+
+Cell* Cell::GetpNext()
+{
+	return pNext;
+}
+
 unsigned Cell::GetGCost()
 {
 	return gCost;

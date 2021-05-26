@@ -26,7 +26,8 @@ public:
 	void Draw();
 	void SetToImage(Images image);
 	Images GetImage();
-
+	void SetpNext(Cell* nextPointer);
+	Cell* GetpNext();
 	unsigned int GetGCost();
 	unsigned int GetFCost();
 	unsigned int GetHCost();
@@ -38,6 +39,6 @@ private:
 	Sprite* sprite;
 	unsigned gCost;
 	unsigned hCost;
-	
+	Cell* pNext;
 	// You may add member variables
 };

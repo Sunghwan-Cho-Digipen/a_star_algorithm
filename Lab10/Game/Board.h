@@ -32,6 +32,7 @@ protected:
 	std::list<Vector2DInt> aiStartCells;
 
 private:
+	
 	Cell** board;
 	int boardWidth;
 	int boardHeight;

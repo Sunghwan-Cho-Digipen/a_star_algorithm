@@ -14,7 +14,8 @@ Creation date:
 #include "Cell.h"
 
 
-void AStar::MakeBoard(std::string levelData) {
+void AStar::MakeBoard(std::string levelData)
+{
 	board = new Board();	// Create the board class
 	board->Load(levelData);	// load the data file and initialize the 2D array
 
@@ -31,19 +32,22 @@ void AStar::MakeBoard(std::string levelData) {
 	}
 }
 
-void AStar::PlayerSelected(Vector2DInt cellLocation) {
+void AStar::PlayerSelected(Vector2DInt cellLocation)
+{
 	selected = board->GetCell(cellLocation);
 	selected->SetToImage(Images::BlueX);
 	//todo
 	// Do stuff here for the selected locations
 }
 
-bool AStar::Visit() {
+bool AStar::Visit()
+{
 	// Do stuff here for each step of our AStar algorithm
 	//todo
 }
 
-bool AStar::Compare(Cell* const& cellA, Cell* const& cellB) {
+bool AStar::Compare(Cell* const& cellA, Cell* const& cellB)
+{
 	//todo
 	// compare 2 cells (return the less than value)
 	// The heap is already set up to use this function for our heap compare
@@ -51,9 +55,11 @@ bool AStar::Compare(Cell* const& cellA, Cell* const& cellB) {
 	
 }
 
-void AStar::Unload() {
+void AStar::Unload()
+{
 	delete board;
-	while (toVisit.IsEmpty() == false) {
+	while (toVisit.IsEmpty() == false) 
+	{
 		toVisit.Pop();
 	}
 	beginSearch = nullptr;
