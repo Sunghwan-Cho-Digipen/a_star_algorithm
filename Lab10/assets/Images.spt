@@ -1,0 +1,21 @@
+assets/Images.png
+HotSpot 32 32
+FrameSize 64 64
+Frame 0 0
+Frame 64 0
+Frame 128 0
+Frame 192 0
+Frame 256 0
+Frame 320 0
+Frame 384 0
+Frame 448 0
+Frame 512 0
+Anim assets/none.anm
+Anim assets/off.anm
+Anim assets/red.anm
+Anim assets/redX.anm
+Anim assets/blue.anm
+Anim assets/blueX.anm
+Anim assets/green.anm
+Anim assets/greenX.anm
+Anim assets/black.anm
