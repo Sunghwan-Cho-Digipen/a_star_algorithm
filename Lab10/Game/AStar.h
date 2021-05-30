@@ -28,6 +28,7 @@ public:
 private:
 	static bool Compare(Cell* const& a, Cell* const& b);
 	// You may add additional functions
+	// Todo
 protected:
 	Board* board;
 	Heap<Cell*> toVisit;
