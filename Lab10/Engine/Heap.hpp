@@ -40,7 +40,7 @@ template <class T>
 void Heap<T>::Push(T newItem)
 {
 	data.push_back(newItem);
-	const int LastIndex = data.size() - 1;
+	const int LastIndex = static_cast<int>(data.size() - 1);
 	HeapifyUp(LastIndex, data.begin(), data.end());
 }
 

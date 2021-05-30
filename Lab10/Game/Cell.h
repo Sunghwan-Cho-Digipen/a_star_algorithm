@@ -5,8 +5,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 File Name: cell.h
 Purpose: header file for cell
 Project: AStar (CS280 Programming Final)
-Author:
-Creation date:
+Author: Kevin Wright / Sunghwan Cho
+Creation date: 05/26/21
 -----------------------------------------------------------------*/
 #pragma once
 
@@ -28,11 +28,17 @@ public:
 	Images GetImage();
 	void SetpNext(Cell* nextPointer);
 	Cell* GetpNext();
-	unsigned int GetGCost();
-	unsigned int GetFCost();
-	unsigned int GetHCost();
-	// You may add additional functions
+	[[nodiscard]] unsigned int GetGCost() const noexcept;
+	void SetGCost(unsigned cost) noexcept;
+	[[nodiscard]] unsigned int GetHCost() const noexcept;
+	void SetHCost(unsigned cost) noexcept;
+	[[nodiscard]] unsigned int GetFCost() const noexcept;
 
+	unsigned ComputeGCost(Cell* currentCell, Cell* startCell);
+	unsigned ComputeHCost(Cell* currentCell, Cell* endCell);
+
+	void SetCostBetweenIndex(Cell* startCell, Cell* endCell);
+	
 private:
 	Vector2DInt xyIndex;
 	Vector2DInt screenPosition;
@@ -40,5 +46,7 @@ private:
 	unsigned gCost;
 	unsigned hCost;
 	Cell* pNext;
-	// You may add member variables
+
+	static constexpr unsigned DIAGONAL_COST = 14;
+	static constexpr unsigned STRAIGHT_COST = 10;
 };

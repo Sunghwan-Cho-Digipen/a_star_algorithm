@@ -5,8 +5,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 File Name: cell.cpp
 Purpose: Source file for cell
 Project: AStar (CS280 Programming Final)
-Author:
-Creation date:
+Author: Kevin Wright / Sunghwan Cho
+Creation date: 05/26/21
 -----------------------------------------------------------------*/
 
 #include "../Engine/Engine.h"
@@ -18,7 +18,7 @@ Creation date:
 
 
 Cell::Cell(Vector2DInt xyIndex, char type, Vector2DInt screenPosition) : xyIndex(xyIndex), screenPosition(screenPosition),
-																	gCost(static_cast<unsigned int>(-1)), hCost(static_cast<unsigned int>(-1)), pNext(nullptr) //todo
+																	gCost(static_cast<unsigned int>(-1)), hCost(static_cast<unsigned int>(-1)), pNext(nullptr)
 {
 	sprite = new Sprite("assets/Images.spt");
 	switch (type)
@@ -86,17 +86,71 @@ Cell* Cell::GetpNext()
 	return pNext;
 }
 
-unsigned Cell::GetGCost()
+unsigned Cell::GetGCost() const noexcept
 {
 	return gCost;
 }
 
-unsigned Cell::GetFCost()
+void Cell::SetGCost(unsigned cost) noexcept
+{
+	gCost = cost;
+}
+
+void Cell::SetHCost(unsigned cost) noexcept
+{
+	hCost = cost;
+}
+
+unsigned Cell::GetFCost() const noexcept
 {
 	return  gCost + hCost;
 }
 
-unsigned Cell::GetHCost()
+unsigned Cell::ComputeGCost(Cell* currentCell, Cell* startCell)
+{
+	if(startCell == currentCell)
+	{
+		return 0;
+	}
+
+	const Vector2DInt StartCellIndex = startCell->GetXYIndex();
+	const Vector2DInt CurrentCellIndex = currentCell->GetXYIndex();
+
+	const int XOffset = std::abs(StartCellIndex.x - CurrentCellIndex.x);
+	const int YOffset = std::abs(StartCellIndex.y - CurrentCellIndex.y);
+
+	const int MinValue = std::min(XOffset, YOffset);
+	const int MaxValue = std::max(XOffset, YOffset);
+
+	return  DIAGONAL_COST * MinValue + STRAIGHT_COST * (MaxValue - MinValue) + startCell->GetGCost();
+}
+
+unsigned Cell::ComputeHCost(Cell* currentCell, Cell* endCell)
+{
+	if(endCell ==  currentCell)
+	{
+		return 0;
+	}
+
+	const Vector2DInt EndCellIndex = endCell->GetXYIndex();
+	const Vector2DInt CurrentCellIndex = currentCell->GetXYIndex();
+
+	const int XOffset = std::abs(EndCellIndex.x - CurrentCellIndex.x);
+	const int YOffset = std::abs(EndCellIndex.y - CurrentCellIndex.y);
+
+	const int MinValue = std::min(XOffset, YOffset);
+	const int MaxValue = std::max(XOffset, YOffset);
+
+	return  DIAGONAL_COST * MinValue + STRAIGHT_COST * (MaxValue - MinValue);
+}
+
+void Cell::SetCostBetweenIndex(Cell* startCell, Cell* endCell)
+{
+	gCost = ComputeGCost(this, startCell);
+	hCost = ComputeHCost(this, endCell);
+}
+
+unsigned Cell::GetHCost() const noexcept
 {
 	return hCost;
 }

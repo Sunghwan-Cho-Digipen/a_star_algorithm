@@ -5,8 +5,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 File Name: AStar.h
 Purpose: Header for the AStar file
 Project: AStar (CS280 Programming Final)
-Author: 
-Creation date: 
+Author: Kevin Wright / Sunghwan Cho
+Creation date: 05/26/21
 -----------------------------------------------------------------*/
 
 #pragma once

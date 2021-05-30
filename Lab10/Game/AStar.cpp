@@ -5,8 +5,8 @@ written consent of DigiPen Institute of Technology is prohibited.
 File Name: AStar.cpp
 Purpose: AStar logic for assignment 5 
 Project: AStar (CS280 Programming Final)
-Author: 
-Creation date: 
+Author: Sunghwan Cho
+Creation date: 05/26/21
 -----------------------------------------------------------------*/
 
 #include "AStar.h"
@@ -36,23 +36,21 @@ void AStar::PlayerSelected(Vector2DInt cellLocation)
 {
 	selected = board->GetCell(cellLocation);
 	selected->SetToImage(Images::BlueX);
-	//todo
-	// Do stuff here for the selected locations
+	
+	beginSearch->SetCostBetweenIndex(beginSearch, selected);
+	toVisit.Push(beginSearch);
 }
 
 bool AStar::Visit()
 {
 	// Do stuff here for each step of our AStar algorithm
 	//todo
+	return false;
 }
 
 bool AStar::Compare(Cell* const& cellA, Cell* const& cellB)
 {
-	//todo
-	// compare 2 cells (return the less than value)
-	// The heap is already set up to use this function for our heap compare
-	//return cellA->GetFCost() < cellB->GetFCost() ? true : cellA->GetHCost() < cellB->GetHCost() ? true : false ;
-	
+	return cellA->GetFCost() == cellB->GetFCost() ? cellA->GetHCost() < cellB->GetHCost() : cellA->GetFCost() < cellB->GetFCost();
 }
 
 void AStar::Unload()
