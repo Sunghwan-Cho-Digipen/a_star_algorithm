@@ -26,16 +26,16 @@ public:
 	void Draw();
 	void SetToImage(Images image);
 	Images GetImage();
-	void SetpNext(Cell* nextPointer);
-	Cell* GetpNext();
+	void SetPNext(Cell* nextPointer);
+	Cell* GetPNext();
 	[[nodiscard]] unsigned int GetGCost() const noexcept;
 	void SetGCost(unsigned cost) noexcept;
 	[[nodiscard]] unsigned int GetHCost() const noexcept;
 	void SetHCost(unsigned cost) noexcept;
 	[[nodiscard]] unsigned int GetFCost() const noexcept;
 
-	unsigned ComputeGCost(Cell* currentCell, Cell* startCell);
-	unsigned ComputeHCost(Cell* currentCell, Cell* endCell);
+	static unsigned ComputeGCost(Cell* currentCell, Cell* startCell);
+	static unsigned ComputeHCost(Cell* currentCell, Cell* endCell);
 
 	void SetCostBetweenIndex(Cell* startCell, Cell* endCell);
 	

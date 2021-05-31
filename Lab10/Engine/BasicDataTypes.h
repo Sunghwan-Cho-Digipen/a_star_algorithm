@@ -37,6 +37,7 @@ struct Vector2DInt {
 	void operator +=(Vector2DInt rhs) { x += rhs.x; y += rhs.y; }
 	void operator -=(Vector2DInt rhs) { x -= rhs.x; y -= rhs.y; }
 	Vector2DInt operator -() const { return { -x, -y }; }
+	const bool operator== (const Vector2DInt& rhs) const { return x == rhs.x && y == rhs.y; }
 	operator Vector2D() { return Vector2D{ static_cast<double>(x), static_cast<double>(y) }; }
 };
 

@@ -76,7 +76,7 @@ void Heap<T>::Sort()
 template <class T>
 void Heap<T>::Update(typename std::vector<T>::iterator iter)
 {
-	const int index = iter - data.begin();
+	const int index = static_cast<int>(iter - data.begin());
 
 	int parent = GetParentIndex(index);
 	if (compareFunc(*iter, data[parent]) == true)
@@ -196,7 +196,7 @@ std::ostream& operator<<(std::ostream& out, Heap<T>& heap)
 	}
 	return out;
 }
-//
+
 //template<>
 //std::ostream& operator<<(std::ostream& out, Heap<std::string>& heap)
 //{

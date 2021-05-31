@@ -18,7 +18,7 @@ Creation date: 05/26/21
 class AStar : public Level {
 public:
 	AStar() : board(nullptr), toVisit(Compare) {}
-	void MakeBoard(std::string levelData);
+	void MakeBoard(std::string levelData) override;
 	void PlayerSelected(Vector2DInt cellLocation) override;
 	bool Visit() override;
 	Board* GetBoard() override { return board; }
@@ -27,12 +27,18 @@ public:
 	void Unload() override;
 private:
 	static bool Compare(Cell* const& a, Cell* const& b);
-	// You may add additional functions
-	// Todo
+	
+	void SetVisit(Cell* current);
+	void SetPath(Cell* destination);
+	bool HasAlreadyVisited(Cell* current);
+	void TryToAddNeighbors(Cell* current);
+	void TryToAdd(Cell* parent, const Vector2DInt& neighbor);
+	
 protected:
 	Board* board;
 	Heap<Cell*> toVisit;
 	Cell* beginSearch;
 	Cell* selected;
+	std::vector<Vector2DInt> neighbors;
 };
 

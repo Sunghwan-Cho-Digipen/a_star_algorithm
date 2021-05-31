@@ -29,6 +29,12 @@ public:
 	typename std::vector<T>::iterator Find(const T& val) { return std::find(data.begin(), data.end(), val); }
 	void Update(typename std::vector<T>::iterator iter);
 
+	typename std::vector<T>::iterator begin() { return data.begin(); };
+	typename std::vector<T>::iterator end() { return data.end(); };
+
+
+	template<class U>
+	friend std::ostream& operator<<(std::ostream& out, Heap<U>& heap);
 private:
 
 	using Iter = typename std::vector<T>::iterator;

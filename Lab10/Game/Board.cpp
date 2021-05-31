@@ -41,12 +41,12 @@ void Board::Load(std::string fileName)
 									center.y - cellSize.y * (boardHeight - 1) / 2 };
 	// Dynamically create a 2D contiguous array (lab 3) of size boardWidth & boardHeight
 	board = reinterpret_cast<Cell**>(malloc(sizeof(Cell*) * boardHeight + sizeof(Cell) * boardWidth * boardHeight));
-	void* row_start_ptr = reinterpret_cast<char*>(board) + sizeof(Cell*) * boardHeight;
+	void* startPtr = reinterpret_cast<char*>(board) + sizeof(Cell*) * boardHeight;
 
 	char type = 0;
 	for (int y = 0; y < boardHeight; ++y)
 	{
-		board[y] = reinterpret_cast<Cell*>(reinterpret_cast<char*>(row_start_ptr) + sizeof(Cell) * boardWidth * y);
+		board[y] = reinterpret_cast<Cell*>(reinterpret_cast<char*>(startPtr) + sizeof(Cell) * boardWidth * y);
 		for (int x = 0; x < boardWidth; ++x)
 		{
 			inFile >> type;

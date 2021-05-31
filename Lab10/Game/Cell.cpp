@@ -76,12 +76,12 @@ Images Cell::GetImage()
 	return static_cast<Images>(sprite->GetAnimation());
 }
 
-void Cell::SetpNext(Cell* nextPointer)
+void Cell::SetPNext(Cell* nextPointer)
 {
 	pNext = nextPointer;
 }
 
-Cell* Cell::GetpNext()
+Cell* Cell::GetPNext()
 {
 	return pNext;
 }
