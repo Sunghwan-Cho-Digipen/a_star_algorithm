@@ -105,11 +105,6 @@ void AStar::SetPath(Cell* destination)
 	}
 }
 
-bool AStar::HasAlreadyVisited(Cell* current)
-{
-	return current->GetImage() == Images::Green;
-}
-
 void AStar::TryToAddNeighbors(Cell* current)
 {
 	for(Vector2DInt pos : neighbors)
@@ -126,7 +121,7 @@ void AStar::TryToAdd(Cell* parent, const Vector2DInt& neighbor)
 		return;
 	}
 
-	if (currentCell->GetImage() == Images::Black || HasAlreadyVisited(currentCell) == true)
+	if (currentCell->GetImage() == Images::Black || currentCell->GetImage() == Images::Green)
 	{
 		return;
 	}
@@ -161,7 +156,6 @@ void AStar::TryToAdd(Cell* parent, const Vector2DInt& neighbor)
 			(*iter)->SetPNext(parent);
 			toVisit.Update(iter);
 		}
-
 		return;
 	}
 

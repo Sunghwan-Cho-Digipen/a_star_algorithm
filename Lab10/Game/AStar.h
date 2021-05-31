@@ -30,7 +30,6 @@ private:
 	
 	void SetVisit(Cell* current);
 	void SetPath(Cell* destination);
-	bool HasAlreadyVisited(Cell* current);
 	void TryToAddNeighbors(Cell* current);
 	void TryToAdd(Cell* parent, const Vector2DInt& neighbor);
 	
