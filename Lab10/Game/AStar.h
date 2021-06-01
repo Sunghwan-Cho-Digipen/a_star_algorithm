@@ -28,10 +28,10 @@ public:
 private:
 	static bool Compare(Cell* const& a, Cell* const& b);
 	
-	void SetVisit(Cell* current);
-	void SetPath(Cell* destination);
-	void TryToAddNeighbors(Cell* current);
-	void TryToAdd(Cell* parent, const Vector2DInt& neighbor);
+	void SetVisit(Cell* currentCell);
+	void SetPath(Cell* destinationCell);
+	void TryToAddNeighbors(Cell* currentCell);
+	void TryToAdd(Cell* nextCell, const Vector2DInt& neighbor);
 	
 protected:
 	Board* board;

@@ -90,14 +90,14 @@ void AStar::Unload()
 	Level::Unload();
 }
 
-void AStar::SetVisit(Cell* current)
+void AStar::SetVisit(Cell* currentCell)
 {
-	current->SetToImage(Images::Green);
+	currentCell->SetToImage(Images::Green);
 }
 
-void AStar::SetPath(Cell* destination)
+void AStar::SetPath(Cell* destinationCell)
 {
-	Cell* path = destination;
+	Cell* path = destinationCell;
 	while (path != nullptr)
 	{
 		path->SetToImage(Images::Blue);
@@ -105,17 +105,17 @@ void AStar::SetPath(Cell* destination)
 	}
 }
 
-void AStar::TryToAddNeighbors(Cell* current)
+void AStar::TryToAddNeighbors(Cell* currentCell)
 {
 	for(Vector2DInt pos : neighbors)
 	{
-		TryToAdd(current, pos);
+		TryToAdd(currentCell, pos);
 	}
 }
 
-void AStar::TryToAdd(Cell* parent, const Vector2DInt& neighbor)
+void AStar::TryToAdd(Cell* nextCell, const Vector2DInt& neighbor)
 {
-	Cell* currentCell = board->GetCell(parent->GetXYIndex() + neighbor);
+	Cell* currentCell = board->GetCell(nextCell->GetXYIndex() + neighbor);
 	if (currentCell == nullptr)
 	{
 		return;
@@ -133,7 +133,7 @@ void AStar::TryToAdd(Cell* parent, const Vector2DInt& neighbor)
 		const unsigned HCost = (*iter)->GetHCost();
 		const unsigned FCost = GCost + HCost;
 
-		const unsigned CurrentGCost = Cell::ComputeGCost(currentCell, parent);
+		const unsigned CurrentGCost = Cell::ComputeGCost(currentCell, nextCell);
 		const unsigned CurrentHCost = Cell::ComputeHCost(currentCell, selected);
 		const unsigned CurrentFCost = CurrentGCost + CurrentHCost;
 
@@ -143,7 +143,7 @@ void AStar::TryToAdd(Cell* parent, const Vector2DInt& neighbor)
 			{
 				(*iter)->SetGCost(CurrentGCost);
 				(*iter)->SetHCost(CurrentHCost);
-				(*iter)->SetPNext(parent);
+				(*iter)->SetPNext(nextCell);
 				toVisit.Update(iter);
 			}
 			return;
@@ -153,13 +153,13 @@ void AStar::TryToAdd(Cell* parent, const Vector2DInt& neighbor)
 		{
 			(*iter)->SetGCost(CurrentGCost);
 			(*iter)->SetHCost(CurrentHCost);
-			(*iter)->SetPNext(parent);
+			(*iter)->SetPNext(nextCell);
 			toVisit.Update(iter);
 		}
 		return;
 	}
 
-	currentCell->SetCostBetweenIndex(parent, selected);
-	currentCell->SetPNext(parent);
+	currentCell->SetCostBetweenIndex(nextCell, selected);
+	currentCell->SetPNext(nextCell);
 	toVisit.Push(currentCell);
 }
