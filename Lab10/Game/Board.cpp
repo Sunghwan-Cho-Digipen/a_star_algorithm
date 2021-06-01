@@ -34,12 +34,10 @@ void Board::Load(std::string fileName)
 	inFile >> boardWidth;
 	inFile >> boardHeight;
 
-	/* screenPosition is the xy position for where the cell is located on the screen.  
-	This is the bottom left cell. position.  Use cellSize to find the other cell screen positions*/
 
 	Vector2DInt screenPosition = { center.x - cellSize.x * (boardWidth - 1) / 2,
 									center.y - cellSize.y * (boardHeight - 1) / 2 };
-	// Dynamically create a 2D contiguous array (lab 3) of size boardWidth & boardHeight
+
 	board = reinterpret_cast<Cell**>(malloc(sizeof(Cell*) * boardHeight + sizeof(Cell) * boardWidth * boardHeight));
 	void* startPtr = reinterpret_cast<char*>(board) + sizeof(Cell*) * boardHeight;
 

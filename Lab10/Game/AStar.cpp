@@ -32,12 +32,12 @@ void AStar::MakeBoard(std::string levelData)
 	}
 
 	neighbors.emplace_back(Vector2DInt{ 0, 1 });				//up
-	neighbors.emplace_back(Vector2DInt{ 1, 1 });				//right up
 	neighbors.emplace_back(Vector2DInt{ 1, 0 });				//right
-	neighbors.emplace_back(Vector2DInt{ 1, -1 });				//right down
 	neighbors.emplace_back(Vector2DInt{ 0, -1 });				//down
-	neighbors.emplace_back(Vector2DInt{ -1, -1 });				//left down
 	neighbors.emplace_back(Vector2DInt{ -1, 0 });				//left
+	neighbors.emplace_back(Vector2DInt{ 1, 1 });				//right up
+	neighbors.emplace_back(Vector2DInt{ 1, -1 });				//right down
+	neighbors.emplace_back(Vector2DInt{ -1, -1 });				//left down
 	neighbors.emplace_back(Vector2DInt{ -1, 1 });				//left up
 }
 
@@ -48,11 +48,11 @@ void AStar::PlayerSelected(Vector2DInt cellLocation)
 	
 	beginSearch->SetCostBetweenIndex(beginSearch, selected);
 	toVisit.Push(beginSearch);
+	std::cout << "Heap:" << toVisit << std::endl;
 }
 
 bool AStar::Visit()
 {
-	std::cout << "Heap:" << toVisit << std::endl;
 	if (toVisit.IsEmpty() == false)
 	{
 		Cell* currentCell = toVisit.Pop();
@@ -65,10 +65,10 @@ bool AStar::Visit()
 		
 		SetVisit(currentCell);
 		TryToAddNeighbors(currentCell);
-
+		std::cout << "Heap:" << toVisit << std::endl;
 		return false;
 	}
-
+	std::cout << "Heap:" << toVisit << std::endl;
 	return true;
 }
 
@@ -113,53 +113,53 @@ void AStar::TryToAddNeighbors(Cell* currentCell)
 	}
 }
 
-void AStar::TryToAdd(Cell* nextCell, const Vector2DInt& neighbor)
+void AStar::TryToAdd(Cell* currentCell, const Vector2DInt& neighbor)
 {
-	Cell* currentCell = board->GetCell(nextCell->GetXYIndex() + neighbor);
-	if (currentCell == nullptr)
+	Cell* targetCell = board->GetCell(currentCell->GetXYIndex() + neighbor);
+	if (targetCell == nullptr)
 	{
 		return;
 	}
 
-	if (currentCell->GetImage() == Images::Black || currentCell->GetImage() == Images::Green)
+	if (targetCell->GetImage() == Images::Black || targetCell->GetImage() == Images::Green)
 	{
 		return;
 	}
 
-	auto iter = toVisit.Find(currentCell);
+	auto iter = toVisit.Find(targetCell);
 	if (iter != toVisit.end())
 	{
 		const unsigned GCost = (*iter)->GetGCost();
 		const unsigned HCost = (*iter)->GetHCost();
 		const unsigned FCost = GCost + HCost;
 
-		const unsigned CurrentGCost = Cell::ComputeGCost(currentCell, nextCell);
-		const unsigned CurrentHCost = Cell::ComputeHCost(currentCell, selected);
-		const unsigned CurrentFCost = CurrentGCost + CurrentHCost;
+		const unsigned TargetGCost = Cell::ComputeGCost(targetCell, currentCell);
+		const unsigned TargetHCost = Cell::ComputeHCost(targetCell, selected);
+		const unsigned TargetFCost = TargetGCost + TargetHCost;
 
-		if (FCost == CurrentFCost)
+		if (FCost == TargetFCost)
 		{
-			if (CurrentHCost < HCost)
+			if (TargetHCost < HCost)
 			{
-				(*iter)->SetGCost(CurrentGCost);
-				(*iter)->SetHCost(CurrentHCost);
-				(*iter)->SetPNext(nextCell);
+				(*iter)->SetGCost(TargetGCost);
+				(*iter)->SetHCost(TargetHCost);
+				(*iter)->SetPNext(currentCell);
 				toVisit.Update(iter);
 			}
 			return;
 		}
 
-		if (FCost > CurrentFCost)
+		if (FCost > TargetFCost)
 		{
-			(*iter)->SetGCost(CurrentGCost);
-			(*iter)->SetHCost(CurrentHCost);
-			(*iter)->SetPNext(nextCell);
+			(*iter)->SetGCost(TargetGCost);
+			(*iter)->SetHCost(TargetHCost);
+			(*iter)->SetPNext(currentCell);
 			toVisit.Update(iter);
 		}
 		return;
 	}
 
-	currentCell->SetCostBetweenIndex(nextCell, selected);
-	currentCell->SetPNext(nextCell);
-	toVisit.Push(currentCell);
+	targetCell->SetCostBetweenIndex(currentCell, selected);
+	targetCell->SetPNext(currentCell);
+	toVisit.Push(targetCell);
 }

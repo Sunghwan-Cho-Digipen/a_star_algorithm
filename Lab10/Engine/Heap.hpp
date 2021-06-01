@@ -196,14 +196,3 @@ std::ostream& operator<<(std::ostream& out, Heap<T>& heap)
 	}
 	return out;
 }
-
-//template<>
-//std::ostream& operator<<(std::ostream& out, Heap<std::string>& heap)
-//{
-//	for (unsigned int i = 0; i < heap.data.size() - 1; i++)
-//	{
-//		out << heap.data[i] << ",  ";
-//	}
-//	out << heap.data.back();
-//	return out;
-//}
